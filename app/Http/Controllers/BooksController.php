@@ -10,12 +10,14 @@ class BooksController extends Controller
 {
     public function store()
     {
-        Book::create($this->validateRequest());
+        $book = Book::create($this->validateRequest());
+        return redirect($book->path());
     }
 
     public function update(Book $book) 
     {
         $book->update($this->validateRequest());
+        return redirect($book->path());
     }
 
     private function validateRequest()
@@ -25,4 +27,10 @@ class BooksController extends Controller
             'author'=>'required'
         ]);
     }
+
+    public function destory(Book $book)
+    {
+        $book->delete();
+        return redirect('/books');
+    } 
 }
